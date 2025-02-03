@@ -11,11 +11,11 @@ public interface TodoService {
 
     TodoDTO get(Long tno);
 
-    Long register(TodoDTO dto); //pk 값을 return
+    Long register(TodoDTO dto); //pk 값을 return 아니면 데이터 자체를 return 해도 된다.
 
     void modify(TodoDTO dto); //예외를 처리하기 위해 void 반환타입
 
-    void remove(Long tno); //pk값으로 삭제
+    void remove(Long tno); //pk 값으로 삭제
 
     PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO);
 

@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class TodoDTO {
 
-    private Long tno; // pk를 비교할 때는 equlas 랑 hashcode 를 사용한다 기본 자료형 지정 불가
+    private Long tno; // pk를 비교할 때는 equals 랑 hashcode 를 사용한다 기본 자료형 지정 불가
 
 
     private String title;

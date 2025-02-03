@@ -11,12 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 @SpringBootTest
 @Log4j2
+@Transactional //테스트 종료시 롤백
 public class TodoRepositoryTests {
 
     @Autowired
@@ -26,7 +28,7 @@ public class TodoRepositoryTests {
     @Test
     public void test1() {
 
-        Assertions.assertNotNull(todoRepository);
+        Assertions.assertNotNull(todoRepository); //null 이 아니면 성공
 
         log.info(todoRepository.getClass().getName());
 
@@ -72,13 +74,10 @@ public class TodoRepositoryTests {
 
         Todo todo = result.orElseThrow();
 
-        todo.changeTitle("Update title");
-        todo.changeContent("updated content");
-        todo.changeComplete(true);
+
+        todo.updateTodo("Update title","updated content",true);
 
         todoRepository.save(todo);
-
-
 
 
     }
@@ -88,13 +87,11 @@ public class TodoRepositoryTests {
         //페이지 번호는 0부터 시작
         Pageable pageable = PageRequest.of(0,10, Sort.by("tno").descending());
 
-        Page<Todo> result = todoRepository.findAll(pageable);
+        Page<Todo> result = todoRepository.findAll(pageable); //페이징 처리
 
         log.info(result.getTotalElements());
 
         log.info(result.getContent());
-
-
 
     }
 

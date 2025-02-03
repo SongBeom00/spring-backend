@@ -8,11 +8,13 @@ import org.songbeom.mallapi.dto.PageResponseDTO;
 import org.songbeom.mallapi.dto.TodoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 @SpringBootTest
 @Log4j2
+@Transactional
 public class TodoServiceTests {
 
     @Autowired

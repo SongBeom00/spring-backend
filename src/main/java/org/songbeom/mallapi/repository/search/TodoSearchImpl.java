@@ -17,7 +17,7 @@ public class TodoSearchImpl extends QuerydslRepositorySupport implements TodoSea
 
     public TodoSearchImpl(){
         super(Todo.class);
-    }
+    } // Todo class 를 이용해서 QuerydslRepositorySupport 생성자 호출
 
 
     @Override
@@ -27,21 +27,35 @@ public class TodoSearchImpl extends QuerydslRepositorySupport implements TodoSea
 
         QTodo todo = QTodo.todo;
 
+        // QueryDSL 의 JPQLQuery 객체 생성 (FROM 절)
         JPQLQuery<Todo> query = from(todo);
 
-//        query.where(todo.title.contains("1"));
 
+        // 페이징 정보 설정
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage()-1,
-                pageRequestDTO.getSize(),
-                Sort.by("tno").descending());
+                pageRequestDTO.getPage() - 1,     // 페이지 번호 (0부터 시작)
+                pageRequestDTO.getSize(),         // 페이지 크기
+                Sort.by("tno").descending()       // 정렬 기준
+        );
 
+        // 페이징 적용 (LIMIT, OFFSET 추가)
         this.getQuerydsl().applyPagination(pageable, query);
 
-        List<Todo> list = query.fetch();//목록 데이터
+        // 데이터 가져오기
+        List<Todo> list = query.fetch();       // 페이징된 데이터 목록
+        long total = query.fetchCount();       // 총 데이터 수
 
-        long total = query.fetchCount();
-
-        return new PageImpl<>(list,pageable,total);
+        // Page 객체로 반환
+        return new PageImpl<>(list, pageable, total);
     }
+
+    // 예시 조회 메서드
+    //PageRequestDTO pageRequestDTO = new PageRequestDTO(2, 10);  // 2번째 페이지, 페이지 크기 10
+//    SELECT *
+//    FROM todo
+//    ORDER BY tno DESC
+//    LIMIT 10
+//    OFFSET 10;
+
+
 }

@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 public class PageResponseDTO<E> { //페이징 결과물 -> (목록 데이터 (DTO)
 
 
-    private List<E> dtoList; //dto의 목록 데이터
+    private List<E> dtoList; //dto 의 목록 데이터
 
     private List<Integer> pageNumList;
 

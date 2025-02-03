@@ -31,7 +31,6 @@ public class TodoServiceImpl implements TodoService{
 
         Todo todo = result.orElseThrow();
 
-
         return entityToDTO(todo);
     }
 
@@ -48,7 +47,7 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public void modify(TodoDTO dto) {
         Optional<Todo> result = todoRepository.findById(dto.getTno());
-        // result 값으로 pk값 Tno가 있는 유저 정보를 들고온다.
+        // result 값으로 pk값 Tno 가 있는 유저 정보를 들고온다.
 
         Todo todo = result.orElseThrow();
         //- **`orElseThrow`**:
