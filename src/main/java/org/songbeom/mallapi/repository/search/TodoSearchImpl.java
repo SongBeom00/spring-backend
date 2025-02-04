@@ -10,6 +10,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Log4j2
@@ -39,10 +40,11 @@ public class TodoSearchImpl extends QuerydslRepositorySupport implements TodoSea
         );
 
         // 페이징 적용 (LIMIT, OFFSET 추가)
-        this.getQuerydsl().applyPagination(pageable, query);
+        Objects.requireNonNull(this.getQuerydsl()).applyPagination(pageable, query);
 
         // 데이터 가져오기
         List<Todo> list = query.fetch();       // 페이징된 데이터 목록
+
         long total = query.fetchCount();       // 총 데이터 수
 
         // Page 객체로 반환

@@ -38,7 +38,7 @@ public class TodoController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping
     public Map<String,Long> register(@RequestBody TodoDTO dto){
         log.info("todoDTO....... "+dto);
         Long tno = todoService.register(dto);

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
+@SuperBuilder //부모클래스의 필드를 사용할 수 있게 해줌
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

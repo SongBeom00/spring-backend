@@ -32,21 +32,21 @@ public class PageResponseDTO<E> { //페이징 결과물 -> (목록 데이터 (DT
         this.totalCount = (int)total;
 
         //끝페이지 end
-        int end = (int)Math.ceil(pageRequestDTO.getPage() / 10.0) * 10;
+        int end = (int) Math.ceil(pageRequestDTO.getPage() / 10.0) * 10;
 
+        //시작페이지 start ->  1~10 11~20 21~30 ...
         int start = end - 9;
 
         //진짜 마지막 page
-        int last = (int)Math.ceil(totalCount/(double)pageRequestDTO.getSize());
+        int last = (int) Math.ceil(totalCount/(double)pageRequestDTO.getSize());
 
-        end = end > last ? last : end;
+        end = Math.min(end, last); //end 가 last 보다 크면 last 로 변경
 
         this.prev = start > 1;
 
         this.next = totalCount > end * pageRequestDTO.getSize();
 
         this.pageNumList = IntStream.rangeClosed(start,end).boxed().collect(Collectors.toList());
-
 
         this.prevPage = prev ? start - 1 : 1;
 
@@ -56,6 +56,5 @@ public class PageResponseDTO<E> { //페이징 결과물 -> (목록 데이터 (DT
 
 
     }
-
 
 }
