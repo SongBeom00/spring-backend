@@ -3,7 +3,6 @@ package org.songbeom.mallapi.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.songbeom.mallapi.domain.Todo;
 import org.songbeom.mallapi.dto.PageRequestDTO;
 import org.songbeom.mallapi.dto.PageResponseDTO;
 import org.songbeom.mallapi.dto.TodoDTO;
