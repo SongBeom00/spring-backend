@@ -4,12 +4,18 @@ import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.songbeom.mallapi.domain.Product;
+import org.songbeom.mallapi.dto.PageRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,20 +31,23 @@ class ProductRepositoryTest {
 
 
     @Test
-    @Rollback(value = false)
+//    @Rollback(value = false)
     void 상품추가() throws Exception {
         //given
-        Product product = Product.builder()
-                .pname("상품2")
-                .price(10000)
-                .pdesc("상품2 설명")
-                .build();
+        for (int i = 3; i < 10; i++) {
 
-        product.addImageString(UUID.randomUUID()+"_"+"test3.jpg");
-        product.addImageString(UUID.randomUUID()+"_"+"test4.jpg");
+            Product product = Product.builder()
+                    .pname("상품"+i)
+                    .price(10000*i)
+                    .pdesc("상품 설명"+i)
+                    .build();
 
-        //when
-        productRepository.save(product);
+            product.addImageString(UUID.randomUUID()+"_"+"test3.jpg");
+            product.addImageString(UUID.randomUUID()+"_"+"test4.jpg");
+
+            //when
+            productRepository.save(product);
+        }
 
         //then
         
@@ -114,5 +123,36 @@ class ProductRepositoryTest {
         //then
 
     }
+
+    @Test
+    void 상품조회3() throws Exception {
+        //given
+        Pageable pageable = PageRequest.of(0,8, Sort.by("pno").descending());
+        
+        //when
+        Page<Object[]> result = productRepository.selectList(pageable);
+
+        //then
+        result.getContent().forEach(arr -> log.info(Arrays.toString(arr)));
+
+    }
+
+    @Test
+    void 상품검색() throws Exception {
+        //given
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().build(); // default page 1, size 10
+
+        productRepository.searchProductList(pageRequestDTO);
+        
+        //when
+
+        //then
+
+    }
+
+
+
+
+
 
 }
