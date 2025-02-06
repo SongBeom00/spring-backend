@@ -59,6 +59,12 @@ public class ProductController {
 
         log.info("uploadedFileNames: {}",uploadedFileNames);
 
+        try {
+            Thread.sleep(2000); // 서버 부하를 일으키기 위해 2초간 대기
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
 
         return Map.of("result",pno);
     }
@@ -96,7 +102,7 @@ public class ProductController {
         return Map.of("RESULT","SUCCESS");
     }
 
-    @DeleteMapping("/{fileName}")
+    @DeleteMapping("/view/{fileName}")
     public Map<String,String> deleteFile(@PathVariable List<String> fileName){
         log.info("fileName: {}",fileName);
 

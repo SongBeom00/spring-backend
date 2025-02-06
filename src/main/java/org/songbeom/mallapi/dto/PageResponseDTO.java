@@ -44,7 +44,7 @@ public class PageResponseDTO<E> { //페이징 결과물 -> (목록 데이터 (DT
 
         this.prev = start > 1;
 
-        this.next = totalCount > end * pageRequestDTO.getSize();
+        this.next = end < last;
 
         this.pageNumList = IntStream.rangeClosed(start,end).boxed().collect(Collectors.toList());
 
@@ -52,6 +52,9 @@ public class PageResponseDTO<E> { //페이징 결과물 -> (목록 데이터 (DT
 
         this.nextPage = next ? end + 1 : 0;
 
+        this.current = pageRequestDTO.getPage();
+
+        this.totalPage = last;
 
 
 
