@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -30,7 +31,7 @@ public class Member {
 
 
     @Builder.Default
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING) //EnumType.ORDINAL 은 순서로 저장 EnumType.STRING 은 문자열로 저장
     @ElementCollection(fetch = LAZY)
     private List<MemberRole> memberRoleList = new ArrayList<>();
 

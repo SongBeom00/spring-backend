@@ -1,6 +1,7 @@
 package org.songbeom.mallapi.controller.advice;
 
 
+import org.songbeom.mallapi.util.CustomJWTException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,13 +15,20 @@ import java.util.NoSuchElementException;
 public class CustomControllerAdvice {
 
     @ExceptionHandler(NoSuchElementException.class) //만약 존재하는 데이터가 없으면 404에러 json 반환
-    public ResponseEntity<?> notExist(NoSuchElementException e){
+    protected ResponseEntity<?> notExist(NoSuchElementException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("msg",e.getMessage()));
 
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class) //http://localhost:8080/api/todo/list?page=AAA
-    public ResponseEntity<?> notExist(MethodArgumentNotValidException e){
+    protected ResponseEntity<?> notExist(MethodArgumentNotValidException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("msg",e.getMessage()));
+    }
+
+    @ExceptionHandler(CustomJWTException.class)
+    protected ResponseEntity<?> handleCustomJWTException(CustomJWTException e) {
+        String msg = e.getMessage();
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", msg));
     }
 }
