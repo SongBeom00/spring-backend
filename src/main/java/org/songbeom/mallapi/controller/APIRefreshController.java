@@ -60,16 +60,14 @@ public class APIRefreshController {
         // JWT exp를 날짜로 변환
         Date expDate = new Date((long) exp * 1000);
 
-        // 현재 시간과의 차이 계산 -> 밀리초로 나옴
+        // 현재 시간 과의 차이 계산 -> 밀리초로 나옴
         long gap = expDate.getTime() - System.currentTimeMillis();
 
         // 분으로 변환
         long leftMin = gap / (1000 * 60);
 
-
-        // 60분 미만이면 true 반환
+        // 60분 미만 이면 true 반환
         return leftMin < 60;
-
     }
 
     private boolean checkExpiredToken(String token){
