@@ -98,11 +98,8 @@ public class CustomFileUtil {
             if(!resource.exists()){ //파일이 존재하지 않으면
                 resource = new FileUrlResource(uploadPath+File.separator+"default.png"); //썸네일 파일 경로를 이용한 Resource 객체 생성
             }
-
             HttpHeaders headers = new HttpHeaders(); //HttpHeaders 객체 생성
             headers.add("Content-Type",Files.probeContentType(resource.getFile().toPath()));
-
-
             return ResponseEntity.ok().headers(headers).body(resource); //Resource 객체를 이용한 ResponseEntity 객체 반환
 
         } catch (IOException e) {

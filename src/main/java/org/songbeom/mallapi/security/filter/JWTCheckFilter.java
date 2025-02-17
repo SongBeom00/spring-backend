@@ -68,7 +68,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             log.info(memberDTO.getAuthorities());
 
             UsernamePasswordAuthenticationToken authenticationToken
-                    = new UsernamePasswordAuthenticationToken(memberDTO,memberDTO.getAuthorities());
+                    = new UsernamePasswordAuthenticationToken(memberDTO,null,memberDTO.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
@@ -77,7 +77,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         }catch (Exception e){
             log.error(e.getMessage());
             Gson g =new Gson();
-            String temp = g.toJson(Map.of("error","토큰이 유효하지 않습니다."));
+            String temp = g.toJson(Map.of("error","ERROR_ACCESS_TOKEN"));
 
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
